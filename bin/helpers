@@ -112,3 +112,13 @@ generate_password_file() {
   fi
   echo $(</dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${3:-32}) > ${1}/${2}
 }
+
+generate_salt_file() {
+  mkdir -p $1
+  if [ -f ${1}/${2} ]; then
+    log_warn "File ${1}/${2} already exists. Skipping generation."
+  fi
+  echo $(</dev/urandom tr -dc A-Z-a-z-0-9 | head -c${3:-16}) > ${1}/${2}
+}
+
+
