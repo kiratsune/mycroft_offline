@@ -41,6 +41,18 @@ To cleanup run:
 $ make clean
 ```
 
+## Troubleshooting
+
+Problem: No skills available in the marketplace.
+Solution: your selene version is too high... A quick fix is to edit get_display_data_for_skills.sql and change the equal sign = for a less or equal sign <= in the WHERE clause. (In a container the file is in : /opt/selene/selene-backend/shared/selene/data/skill/repository/sql/get_display_data_for_skills.sql )
+
+Problem: Adding a new device does nothing.
+Solution: Add the selected wake wors in the database (Yes, no wake word are in the database by default, even if they are on the UI..), use something like an Adminer container to edit the databse manually and add the 'Hey mycroft' wake word. The backend is 'precise', the display name 'Hey Mycroft' and name 'hey mycroft'. Account can be null.
+
+## TODO
+Include a fix for the problems in the troubleshooting section.
+Rewrite the nginx config to expose api only on the required domains ? to make it easier to split this on multiple computers without docker swarm ?
+
 ## Note
 
 This project started as part of SUSE Hackweek 19: https://hackweek.suse.com/projects/home-assistant-that-doesnt-spy-on-you-developers-edition

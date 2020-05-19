@@ -190,19 +190,19 @@ services:
     restart: "on-failure"
     expose:
       - "8080"
-  mycroft:
-    image: mycroftai/docker-mycroft
-    restart: "on-failure"
-    volumes:
-      - mycroft_storage_dir:/root/.mycroft
-      - pulse_runtime:${XDG_RUNTIME_DIR}/pulse/
-      - pulse_config:/root/.config/pulse/
-    environment:
-      PULSE_SERVER: "unix:${XDG_RUNTIME_DIR}/pulse/native"
-    ports:
-      - "8181:8181"
-    devices:
-      - "/dev/snd:/dev/snd"
+  #mycroft:
+  #  image: mycroftai/docker-mycroft
+  #  restart: "on-failure"
+  #  volumes:
+  #    - mycroft_storage_dir:/root/.mycroft
+  #    - pulse_runtime:${XDG_RUNTIME_DIR}/pulse/
+  #    - pulse_config:/root/.config/pulse/
+  #  environment:
+  #    PULSE_SERVER: "unix:${XDG_RUNTIME_DIR}/pulse/native"
+   # ports:
+  #    - "8181:8181"
+ #   devices:
+#      - "/dev/snd:/dev/snd"
   selene-ui-market:
     image: selene-ui-market
     restart: "on-failure"

@@ -4,31 +4,17 @@ FROM ubuntu:18.04 as build
 
 ARG mycroft_domain
 
-RUN apt-get update
-RUN apt-get install -y npm git curl
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
-RUN apt-get install -y nodejs
-
-RUN npm install -g @angular/cli
+RUN apt-get update && apt-get install -y npm git curl && curl -sL https://deb.nodesource.com/setup_10.x | bash - && apt-get install -y nodejs && npm install -g @angular/cli
 
 WORKDIR /usr/src/app
 RUN git clone https://github.com/MycroftAI/selene-ui.git
 WORKDIR selene-ui
 
 # Replace mycroft urls with our own. TODO: Get domain from env
-RUN find . \( -type d -name .git -prune \) -o -type f -print0 | xargs -0 sed -i "s/mycroft\.ai/${mycroft_domain}/g"
-
-RUN npm --version
-RUN npm cache clean --forc
-RUN rm package-lock.json
-#RUN npm install --only=prod
-RUN npm install
+RUN find . \( -type d -name .git -prune \) -o -type f -print0 | xargs -0 sed -i "s/mycroft\.ai/${mycroft_domain}/g" && npm --version && npm cache clean --forc && rm package-lock.json && npm install
 WORKDIR projects
-RUN ng build --project shared
-RUN ng build --project globalnav
-RUN ng build --project account --prod
-RUN ng build --project market --prod
-RUN ng build --project sso --prod
+RUN ng build --project shared && ng build --project globalnav && ng build --project account --prod && ng build --project market --prod && ng build --project sso --prod
+
 
 FROM nginx:latest
 

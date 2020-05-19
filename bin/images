@@ -11,7 +11,7 @@ docker build --build-arg mycroft_domain=${MYCROFT_DOMAIN} -f nginxproxy-Dockerfi
 for app in account sso market; do docker build --build-arg application_name=${app} --build-arg mycroft_domain=${MYCROFT_DOMAIN} -t selene-ui-${app} . ; done
 
 pushd ${CURRENT_DIR}/../selene-backend
-docker build -t selene-backend .
+docker build --build-arg mycroft_domain=${MYCROFT_DOMAIN} -t selene-backend .
 
 pushd ${CURRENT_DIR}/../deepspeech
 docker build -t deepspeech .
