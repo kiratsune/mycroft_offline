@@ -19,6 +19,7 @@ The project that is closer to the desired result is Mycroft (https://mycroft.ai/
 - docker: https://www.docker.com/get-started
 - docker-compose: https://docs.docker.com/compose/
 - Internet connection to download docker images and dependencies
+- A good CPU, STT AND TTS are very CPU intensive. (Using a (nvidia/CUDA ?) GPU would speed up the process a lot but I don't know if it works with my setup yet.)
 
 ## Getting started
 
@@ -38,8 +39,9 @@ And everything is ready to go. The setup phase can take while.
 **Solution** :  your selene version is too high... A quick fix is to edit get_display_data_for_skills.sql and change the equal sign = for a less or equal sign <= in the WHERE clause. (In a container the file is in : /opt/selene/selene-backend/shared/selene/data/skill/repository/sql/get_display_data_for_skills.sql )  
 
 ## TODO
-Include a fix for the problems in the troubleshooting section.  
-Rewrite the nginx config to expose api only on the required domains ? to make it easier to split this on multiple computers without docker swarm ?  
+- Make TTS and STT use the GPU. Not very difficult to do, but they seem to use CUDA and for now I don't plan on installing anything proprietary on my servers.
+- Include a fix for the problems in the troubleshooting section.  
+- Rewrite the nginx config to expose api only on the required domains ? to make it easier to split this on multiple computers without docker swarm ?  
 
 ## Note
 
