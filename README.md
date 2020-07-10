@@ -41,8 +41,9 @@ And everything is ready to go. The setup phase can take a while.
 **Solution** :  your selene version is too high... A quick fix is to edit get_display_data_for_skills.sql and change the equal sign = for a less or equal sign <= in the WHERE clause. (In a container the file is in : /opt/selene/selene-backend/shared/selene/data/skill/repository/sql/get_display_data_for_skills.sql )  
 
 ## TODO
+- core-version should not be hardcoded in docker-compose.yml (get latest somehow?)
 - Add more variables to the .env files. (There are some left in docker-compose.yml)
-- Make TTS and STT use the GPU. Not very difficult to do, but they seem to use CUDA and for now I don't plan on installing anything proprietary on my servers.
+- Make TTS and STT use the GPU. Not very difficult to do, but they seem to use CUDA and for now I do not plan on installing anything proprietary on my servers.
 - Include a fix for the problems in the troubleshooting section.  
 - Rewrite the nginx config to expose api only on the required domains ? to make it easier to split this on multiple computers without docker swarm ?  
 
