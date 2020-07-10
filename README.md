@@ -26,7 +26,7 @@ The project that is closer to the desired result is Mycroft (https://mycroft.ai/
 Edit and complete thses files:  
   
 - config.env
-- config_external_accounts;env
+- config_external_accounts.env
 - .env
 
 Run ./setup.sh (only needed once)  
