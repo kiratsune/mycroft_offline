@@ -23,7 +23,7 @@ The project that is closer to the desired result is Mycroft (https://mycroft.ai/
 
 ## Getting started
 
-Edit and complete thses files:  
+Edit and complete :  
   
 - config.env
 - config_external_accounts.env
