@@ -23,7 +23,7 @@ The project that is closer to the desired result is Mycroft (https://mycroft.ai/
 
 ## Getting started
 
-Edit and complete thses files:  
+Edit and complete :  
   
 - config.env
 - config_external_accounts.env
@@ -34,7 +34,7 @@ The .env file is only used to build the images, but the variable it contains mus
 Run ./setup.sh (only needed once)  
 
 Run docker-compose up -d  
-And everything is ready to go. The setup phase can take while.  
+And everything is ready to go. The setup phase can take a while.  
 ## Troubleshooting
 
 #### Problem: No skills available in the marketplace.  
