@@ -1,9 +1,12 @@
 [WIP] Trying to fix everything to 'make it just works' on my server.  
-This project is a collection of files which helps you deploy a full instance of [mycroft](https://mycroft.ai/) (both backend and frontend).
+
+This project is a collection of files which helps you deploy a full instance of [mycroft](https://mycroft.ai/) (only backend, APIs and web-ui, the front-end (enclosures) can already be setup with one docker command).  
+  
+Heavily based on the original repo by jimmykarily at https://github.com/jimmykarily/mycroft_offline .  
 
 ## Goal
 
-Deploy a home assistant offline as easy as possible.
+Deploy an offline home assistant server as easely as possible.
 
 ## Why
 
@@ -13,42 +16,26 @@ The project that is closer to the desired result is Mycroft (https://mycroft.ai/
 
 ## Prerequisites
 
-- yq tool: https://github.com/mikefarah/yq/releases (to parse yaml configuration)
 - docker: https://www.docker.com/get-started
 - docker-compose: https://docs.docker.com/compose/
 - Internet connection to download docker images and dependencies
 
-## Build needed images
+## Getting started
 
-Build all the needed images for front-end and back-end:
+Edit and complete thses files:  
+  
+- config.env
+- config_external_accounts;env
+- .env
 
-```
-$ make images
-```
+Run ./setup.sh (only needed once)  
 
-## Deploy
-
-Start by copying `mycroft.yaml.sample` to `mycroft.yaml`. Then edit the values as needed.
-
-Then run:
-
-```
-$ make
-```
-
-To cleanup run:
-
-```
-$ make clean
-```
-
+Run docker-compose up -d  
+And everything is ready to go. The setup phase can take while.  
 ## Troubleshooting
 
-Problem: No skills available in the marketplace.  
-Solution: your selene version is too high... A quick fix is to edit get_display_data_for_skills.sql and change the equal sign = for a less or equal sign <= in the WHERE clause. (In a container the file is in : /opt/selene/selene-backend/shared/selene/data/skill/repository/sql/get_display_data_for_skills.sql )  
-
-Problem: Adding a new device does nothing.  
-Solution: Add the selected wake wors in the database (Yes, no wake word are in the database by default, even if they are on the UI..), use something like an Adminer container to edit the databse manually and add the 'Hey mycroft' wake word. The backend is 'precise', the display name 'Hey Mycroft' and name 'hey mycroft'. Account can be null.
+#### Problem: No skills available in the marketplace.  
+**Solution** :  your selene version is too high... A quick fix is to edit get_display_data_for_skills.sql and change the equal sign = for a less or equal sign <= in the WHERE clause. (In a container the file is in : /opt/selene/selene-backend/shared/selene/data/skill/repository/sql/get_display_data_for_skills.sql )  
 
 ## TODO
 Include a fix for the problems in the troubleshooting section.  
@@ -62,14 +49,10 @@ Idea: Create a mycroft skill to deploy apps with CF (cf cli wrapper)
 
 ## Links
 
+- https://github.com/jimmykarily/mycroft_offline
 - https://mycroft.ai/
 - https://mycroft.ai/initiatives/
 - https://fosspost.org/lists/open-source-speech-recognition-speech-to-text
 - https://mycroft-ai.gitbook.io/docs/about-mycroft-ai/faq#can-mycroft-run-completely-offline-can-i-self-host-everything
 - https://mycroft-ai.gitbook.io/docs/using-mycroft-ai/customizations/stt-engine
 - https://github.com/MycroftAI/selene-backend/issues/203
-
-## TODO
-
-- Add precise container for wake word and make sure it's used by mycroft (check `mycroft-conf get`):
-  https://mycroft-ai.gitbook.io/docs/using-mycroft-ai/troubleshooting/wake-word-troubleshooting#precise
