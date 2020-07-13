@@ -113,7 +113,7 @@ services:
       - "if [ ! -f /shared/db_bootstrap_done ]; then echo 'Database bootstraping not done. Exiting.'; exit 1; fi;
          cd /opt/selene/selene-backend/api/account && /usr/local/bin/pipenv run uwsgi -b 32768 --http 0.0.0.0:4000 --ini uwsgi.ini
         "
-    env_file: :
+    env_file:
       - generated/postgres_password
       - generated/jwt_access_secret
       - generated/jwt_refresh_secret
@@ -145,7 +145,7 @@ services:
          cd /opt/selene/selene-backend/batch && /usr/local/bin/pipenv install &&  pipenv run python script/load_skill_display_data.py --core-version 19.08 && touch /shared/skills_setup_done
         "
         # TODO: core-version shouldn't be hardcoded (get latest somehow?)
-    env_file: :
+    env_file:
       - generated/postgres_password
       - generated/jwt_access_secret
       - generated/jwt_refresh_secret
@@ -176,7 +176,7 @@ services:
       - "if [ ! -f /shared/skills_setup_done ]; then echo 'Skills downloading and setup not done. Exiting.'; exit 1; fi;
          cd /opt/selene/selene-backend/api/market && /usr/local/bin/pipenv run uwsgi -b 32768 --http 0.0.0.0:4000 --ini uwsgi.ini
         "
-    env_file: :
+    env_file:
       - generated/postgres_password
       - generated/jwt_access_secret
       - generated/jwt_refresh_secret
@@ -210,7 +210,7 @@ services:
       - "if [ ! -f /shared/skills_setup_done ]; then echo 'Skills downloading and setup not done. Exiting.'; exit 1; fi;
          cd /opt/selene/selene-backend/api/public && /usr/local/bin/pipenv run uwsgi -b 32768 --http 0.0.0.0:4000 --ini uwsgi.ini
         "
-    env_file: :
+    env_file:
       - generated/postgres_password
       - generated/jwt_access_secret
       - generated/jwt_refresh_secret
