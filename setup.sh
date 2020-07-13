@@ -12,7 +12,7 @@ generate_password_file() {
   else
     u=""
   fi
-  echo "${3}=$(</dev/urandom tr -dc ${u}A-Z-a-z-0-9 | head -c${4:-32})" > ${1}/${2}
+  echo "${3}=$(</dev/urandom tr -dc ${u}A-Za-z0-9 | head -c${4:-32})" > ${1}/${2}
 }
 
 generate_salt_file() {
