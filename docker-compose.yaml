@@ -47,7 +47,7 @@ services:
     depends_on:
       - db
     env_file: 
-      - generated/postgres_password
+      - generated/selene_postgres_password
     volumes:
         - "./wakewords:/setup"
         - "shared:/shared"
@@ -78,7 +78,7 @@ services:
          cd /opt/selene/selene-backend/api/sso && /usr/local/bin/pipenv run uwsgi -b 32768 --http 0.0.0.0:4000 --ini uwsgi.ini
         "
     env_file: 
-      - generated/postgres_password
+      - generated/selene_postgres_password
       - generated/jwt_access_secret
       - generated/jwt_refresh_secret
       - generated/jwt_reset_secret
@@ -114,7 +114,7 @@ services:
          cd /opt/selene/selene-backend/api/account && /usr/local/bin/pipenv run uwsgi -b 32768 --http 0.0.0.0:4000 --ini uwsgi.ini
         "
     env_file:
-      - generated/postgres_password
+      - generated/selene_postgres_password
       - generated/jwt_access_secret
       - generated/jwt_refresh_secret
       - generated/encryption_salt
@@ -146,7 +146,7 @@ services:
         "
         # TODO: core-version shouldn't be hardcoded (get latest somehow?)
     env_file:
-      - generated/postgres_password
+      - generated/selene_postgres_password
       - generated/jwt_access_secret
       - generated/jwt_refresh_secret
       - generated/encryption_salt
@@ -177,7 +177,7 @@ services:
          cd /opt/selene/selene-backend/api/market && /usr/local/bin/pipenv run uwsgi -b 32768 --http 0.0.0.0:4000 --ini uwsgi.ini
         "
     env_file:
-      - generated/postgres_password
+      - generated/selene_postgres_password
       - generated/jwt_access_secret
       - generated/jwt_refresh_secret
       - generated/encryption_salt
@@ -211,7 +211,7 @@ services:
          cd /opt/selene/selene-backend/api/public && /usr/local/bin/pipenv run uwsgi -b 32768 --http 0.0.0.0:4000 --ini uwsgi.ini
         "
     env_file:
-      - generated/postgres_password
+      - generated/selene_postgres_password
       - generated/jwt_access_secret
       - generated/jwt_refresh_secret
       - generated/encryption_salt
