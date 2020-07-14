@@ -66,6 +66,7 @@ docker-compose up -d
 - Make the deepspeech server container use the mainstream repo now that it has been updated.
 - core-version should not be hardcoded in docker-compose.yml (get latest somehow?)
 - Add more variables to the .env files. (There are some left in docker-compose.yml)
+- Remove `.env` and `config.env` and `config_external_accounts.env` from git repository add them to `.gitignore` and place `.*.template` files instead (reduce risk of accidental commit)
 - Make TTS and STT use the GPU. Not very difficult to do, but they seem to use CUDA and for now I do not plan on installing anything proprietary on my servers.
 - Include a fix for the problems in the troubleshooting section.  
 - Rewrite the nginx config to expose api only on the required domains ? to make it easier to split this on multiple computers without docker swarm ?  
