@@ -29,12 +29,33 @@ Edit and complete :
 - config_external_accounts.env
 - .env
 
-The .env file is only used to build the images, but the variable it contains must have the same value as the one in config.env.  
+The .env file is only used to build the images, but the variable it contains must have the same value as the one in `config.env`.  
 
-Run ./setup.sh (only needed once)  
-
-Run docker-compose up -d  
+```sh
+./setup.sh (only needed once)  
+docker-compose up -d  
+```
 And everything is ready to go. The setup phase can take a while.  
+
+
+## Development
+
+After changing the domain settings in `.env` you need to clean build everything to 'burn' the new domain settings into the images
+
+```sh
+docker-compose build --no-cache --pull
+```
+
+A completely fresh startup can be achieved by
+
+```sh
+docker-compose down -v
+rm -rf ./generated
+./setup.sh
+docker-compose build --no-cache --pull
+docker-compose up -d
+```
+
 ## Troubleshooting
 
 #### Problem: No skills available in the marketplace.  
