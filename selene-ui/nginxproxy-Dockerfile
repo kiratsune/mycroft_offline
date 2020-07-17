@@ -2,8 +2,13 @@ FROM nginx:latest
 
 ARG mycroft_domain
 
-RUN apt-get update && apt-get install -y curl dnsutils openssl && rm -rf /etc/nginx/conf.d/default.conf
-
+RUN apt-get update && \
+    apt-get install -y \
+        curl \
+        dnsutils \
+        wait-for-it \
+        openssl && \
+    rm -rf /etc/nginx/conf.d/default.conf
 ADD reverse-proxy.conf /etc/nginx/conf.d/reverse-proxy.conf
 
 # Setup self signed certificate
