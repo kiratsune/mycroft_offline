@@ -122,13 +122,11 @@ services:
     networks: 
       - "internal"
       - "web"
-    expose:
-      - "4000"
     command:
       - bash
       - -c
       - "while [ ! -f /shared/db_bootstrap_done ]; do echo 'Waiting for Database bootstrapping...'; sleep 1; done;
-         cd /opt/selene/selene-backend/api/sso && /usr/local/bin/pipenv run uwsgi -b 32768 --http 0.0.0.0:4000 --ini uwsgi.ini
+         cd /opt/selene/selene-backend/api/sso && /usr/local/bin/pipenv run uwsgi --ini uwsgi.ini
         "
     env_file:
       - generated/selene_postgres_password
@@ -163,13 +161,11 @@ services:
     networks: 
       - "internal"
       - "web"
-    expose:
-      - "4000"
     command:
       - bash
       - -c
       - "while [ ! -f /shared/db_bootstrap_done ]; do echo 'Waiting for Database bootstrapping...'; sleep 1; done;
-         cd /opt/selene/selene-backend/api/account && /usr/local/bin/pipenv run uwsgi -b 32768 --http 0.0.0.0:4000 --ini uwsgi.ini
+         cd /opt/selene/selene-backend/api/account && /usr/local/bin/pipenv run uwsgi --ini uwsgi.ini
         "
     env_file:
       - generated/selene_postgres_password
@@ -202,13 +198,11 @@ services:
     networks: 
       - "internal"
       - "web"
-    expose:
-      - "4000"
     command:
       - bash
       - -c
       - "while [ ! -f /shared/skills_setup_done ]; do echo 'Waiting for Skills setup...'; sleep 1; done;
-         cd /opt/selene/selene-backend/api/market && /usr/local/bin/pipenv run uwsgi -b 32768 --http 0.0.0.0:4000 --ini uwsgi.ini
+         cd /opt/selene/selene-backend/api/market && /usr/local/bin/pipenv run uwsgi --ini uwsgi.ini
         "
     env_file:
       - generated/selene_postgres_password
@@ -241,13 +235,11 @@ services:
     networks: 
       - "internal"
       - "web"
-    expose:
-      - "4000"
     command:
       - bash
       - -c
       - "while [ ! -f /shared/skills_setup_done ]; do echo 'Waiting for Skills setup...'; sleep 1; done;
-         cd /opt/selene/selene-backend/api/public && /usr/local/bin/pipenv run uwsgi -b 32768 --http 0.0.0.0:4000 --ini uwsgi.ini
+         cd /opt/selene/selene-backend/api/public && /usr/local/bin/pipenv run uwsgi --ini uwsgi.ini
         "
     env_file:
       - generated/selene_postgres_password
