@@ -1,0 +1,27 @@
+version: '3'
+services:
+  mycroft:
+    image: mycroftai/docker-mycroft
+    restart: "on-failure"
+    volumes:
+      - ./storage:/root/.mycroft
+      - ${XDG_RUNTIME_DIR}/pulse/:${XDG_RUNTIME_DIR}/pulse/
+      - ${HOME}/.config/pulse/:/root/.config/pulse/
+    environment:
+      PULSE_SERVER: "unix:${XDG_RUNTIME_DIR}/pulse/native"
+    ports:
+      - "8181:8181"
+    devices:
+      - "/dev/snd:/dev/snd"
+    entrypoint:
+      - bash
+      - -c
+      # Deactivate ssl verification to communicate with servers having a self signed certificate
+      - "sed -i 's/data=data, json=json_body, timeout=(3.05, 15)/data=data, json=json_body, timeout=(3.05, 15), verify=False/' /opt/mycroft/mycroft/api/__init__.py &&
+         /opt/mycroft/startup.sh
+        "
+
+networks:
+  default:
+    external:
+      name: mycroft_offline_web
