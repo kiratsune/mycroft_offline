@@ -6,7 +6,7 @@ Heavily based on the original repo by Dimitris Karakasilis (jimmykarily) at http
 
 ## Goal
 
-Deploy an offline home assistant server as easely as possible.
+Deploy an offline home assistant server as easily as possible.
 
 ## Why
 
@@ -21,20 +21,84 @@ The project that is closer to the desired result is Mycroft (https://mycroft.ai/
 - Internet connection to download docker images and dependencies
 - A good CPU, STT AND TTS are very CPU intensive. (Using a (nvidia/CUDA ?) GPU would speed up the process a lot but I don't know if it works with this setup yet.)
 
-## Getting started
+## Prepare configuration
 
-Edit and complete :  
+Edit and complete:
   
-- config.env
-- config_external_accounts.env
-- .env
+- `config.env`
+- `config_external_accounts.env`
+- `.env`
 
-The .env file is only used to build the images, but the variable it contains must have the same value as the one in config.env.  
+The .env file is only used to build the images, but the variable it contains must have the same value as the one in `config.env`.  
 
-Run ./setup.sh (only needed once)  
+To generate all needed passwords in `./generated` you can run:
+```sh
+./setup.sh (only needed once)  
+```
 
-Run docker-compose up -d  
+
+If you do not have a valid domain you can use a fake one like `asdf.asdf` as `MICROFT_DOMAIN`.
+
+Then you should edit your `/etc/hosts` to something like that:
+```
+127.0.0.1 sso.asdf.asdf
+127.0.0.1 account.asdf.asdf
+127.0.0.1 api.asdf.asdf
+127.0.0.1 market.asdf.asdf
+127.0.0.1 home.asdf.asdf
+127.0.0.1 asdf.asdf
+```
+
+## Start Mycroft-Backend
+
+```sh
+docker-compose up -d  
+```
 And everything is ready to go. The setup phase can take a while.  
+
+Now you should be able to access your very own Selene Backend (i.e. browse to `https://home.asdf.asdf`)
+
+
+## Start Mycroft-Core (client)
+
+```sh
+cd ./client
+docker-compose up -d
+```
+
+The host-connections of `./client/storage/mycroft.conf` are linked to the backend docker containers. If you want to start the client on a different machine you need to adjust these ones and the network link in `./client/docker-compose.yml`.
+
+## Register Device and enjoy your personal assistant
+
+During first startup, Mycroft-Core should tell you a pairing code. Browse to `https://home.asdf.asdf` and register your client.
+
+After the registration you should be able to talk to Mycroft and even access Backend-APIs like WolframAlpha (if you registered a valid API-Key).
+
+
+## Security hint
+
+The reverse proxy of Microft-Backend currently uses a self-signed certificate so we needed to disable client side SSL-Verification. If you are using a reverse proxy delivering a valid certificate we strongly recommend you to re-enable SSL-Verification.
+
+To enable SSL-Verification you simply need to remove the entire `entrypoint` section in `./client/docker-compose.yml` and rebuild the container.
+
+## Development
+
+After changing the domain settings in `.env` you need to clean build everything to 'burn' the new domain settings into the images
+
+```sh
+docker-compose build --no-cache --pull
+```
+
+A completely fresh startup can be achieved by
+
+```sh
+docker-compose down -v
+rm -rf ./generated
+./setup.sh
+docker-compose build --no-cache --pull
+docker-compose up -d
+```
+
 ## Troubleshooting
 
 #### Problem: No skills available in the marketplace.  
@@ -45,6 +109,7 @@ And everything is ready to go. The setup phase can take a while.
 - Make the deepspeech server container use the mainstream repo now that it has been updated.
 - core-version should not be hardcoded in docker-compose.yml (get latest somehow?)
 - Add more variables to the .env files. (There are some left in docker-compose.yml)
+- Remove `.env` and `config.env` and `config_external_accounts.env` from git repository add them to `.gitignore` and place `.*.template` files instead (reduce risk of accidental commit)
 - Make TTS and STT use the GPU. Not very difficult to do, but they seem to use CUDA and for now I do not plan on installing anything proprietary on my servers.
 - Include a fix for the problems in the troubleshooting section.  
 - Rewrite the nginx config to expose api only on the required domains ? to make it easier to split this on multiple computers without docker swarm ?  

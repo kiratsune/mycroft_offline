@@ -11,7 +11,7 @@ RUN git clone https://github.com/MycroftAI/selene-ui.git
 WORKDIR selene-ui
 
 # Replace mycroft urls with our own. TODO: Get domain from env
-RUN find . \( -type d -name .git -prune \) -o -type f -print0 | xargs -0 sed -i "s/mycroft\.ai/${mycroft_domain}/g" && npm --version && npm cache clean --forc && rm package-lock.json && npm install
+RUN find . \( -type d -name .git -prune \) -o -type f -print0 | xargs -0 sed -i "s/mycroft\.ai/${mycroft_domain}/g" && npm --version && npm cache clean --forc && npm install
 WORKDIR projects
 RUN ng build --project shared && ng build --project globalnav && ng build --project account --prod && ng build --project market --prod && ng build --project sso --prod
 

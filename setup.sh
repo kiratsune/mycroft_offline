@@ -12,7 +12,7 @@ generate_password_file() {
   else
     u=""
   fi
-  echo "${3}=$(</dev/urandom tr -dc ${u}A-Z-a-z-0-9 | head -c${4:-32})" > ${1}/${2}
+  echo "${3}=$(</dev/urandom tr -dc ${u}A-Za-z0-9 | head -c${4:-32})" > ${1}/${2}
 }
 
 generate_salt_file() {
@@ -32,4 +32,4 @@ generate_password_file ${MYCROFT_CREDENTIALS_DIR} jwt_reset_secret JWT_RESET_SEC
 #for sha512 the salt is 16 charatcer long.
 saltsize=16
 echo "Current salt length is ${saltsize}. If this is incorrect, registrations will not work. (Default: 16, for sha512)"
-generate_salt_file ${MYCROFT_CREDENTIALS_DIR} encyption_salt SALT $saltsize
+generate_salt_file ${MYCROFT_CREDENTIALS_DIR} encryption_salt SALT $saltsize
