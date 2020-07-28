@@ -16,7 +16,6 @@ services:
     env_file:
       - generated/postgres_password
       - generated/selene_postgres_password
-      - config.env
     volumes:
     - ./postgres_setup:/docker-entrypoint-initdb.d
     command:
@@ -49,7 +48,7 @@ services:
       - generated/postgres_password
       - generated/selene_postgres_password
     environment:
-      DB_HOST: "db"
+      DB_HOST: ${DB_HOST:-db}
 
   db_wakeword_setup:
     image: postgres:12.1
@@ -96,15 +95,13 @@ services:
         # TODO: core-version shouldn't be hardcoded (get latest somehow?)
     env_file:
       - generated/selene_postgres_password
-      - generated/jwt_access_secret
-      - generated/jwt_refresh_secret
-      - generated/encryption_salt
-      - config_external_accounts.env
     environment:
-      DB_HOST: db
-      DB_NAME: mycroft
-      DB_PORT: 5432
-      DB_USER: selene
+      DB_HOST: ${DB_HOST:-db}
+      DB_NAME: ${DB_NAME:-mycroft}
+      DB_PORT: ${DB_PORT:-5432}
+      DB_USER: ${DB_USER:-selene}
+      GITHUB_USER: ${GITHUB_USER}
+      GITHUB_PASSWORD: ${GITHUB_PASSWORD}
 
   sso:
     image: selene-backend
@@ -134,16 +131,16 @@ services:
       - generated/jwt_refresh_secret
       - generated/jwt_reset_secret
       - generated/encryption_salt
-      - config.env
     environment:
-      DB_HOST: db
-      DB_NAME: mycroft
-      DB_PORT: 5432
-      DB_USER: selene
-      GITHUB_CLIENT_ID: <github client id> TODO
-      GITHUB_CLIENT_SECRET: <github client secret> TODO
-      SELENE_ENVIRONMENT: prod
-      SENDGRID_API_KEY: <sendgrid API key> TODO
+      DB_HOST: ${DB_HOST:-db}
+      DB_NAME: ${DB_NAME:-mycroft}
+      DB_PORT: ${DB_PORT:-5432}
+      DB_USER: ${DB_USER:-selene}
+      SSO_BASE_URL: ${SSO_BASE_URL}
+      SELENE_ENVIRONMENT: ${SELENE_ENVIRONMENT:-prod}
+      GITHUB_CLIENT_ID: ${GITHUB_CLIENT_ID}
+      GITHUB_CLIENT_SECRET: ${GITHUB_CLIENT_SECRET}
+      SENDGRID_API_KEY: ${SENDGRID_API_KEY}
 
   account:
     image: selene-backend
@@ -172,15 +169,15 @@ services:
       - generated/jwt_access_secret
       - generated/jwt_refresh_secret
       - generated/encryption_salt
-      - config.env
     environment:
-      DB_HOST: db
-      DB_NAME: mycroft
-      DB_PORT: 5432
-      DB_USER: selene
-      SELENE_ENVIRONMENT: prod
-      REDIS_HOST: redis
-      REDIS_PORT: 6379
+      DB_HOST: ${DB_HOST:-db}
+      DB_NAME: ${DB_NAME:-mycroft}
+      DB_PORT: ${DB_PORT:-5432}
+      DB_USER: ${DB_USER:-selene}
+      OAUTH_BASE_URL: ${OAUTH_BASE_URL}
+      SELENE_ENVIRONMENT: ${SELENE_ENVIRONMENT:-prod}
+      REDIS_HOST: ${REDIS_HOST:-redis}
+      REDIS_PORT: ${REDIS_PORT:-6379}
 
   market:
     image: selene-backend
@@ -209,15 +206,15 @@ services:
       - generated/jwt_access_secret
       - generated/jwt_refresh_secret
       - generated/encryption_salt
-      - config.env
     environment:
-      DB_HOST: db
-      DB_NAME: mycroft
-      DB_PORT: 5432
-      DB_USER: selene
-      SELENE_ENVIRONMENT: prod
-      REDIS_HOST: redis
-      REDIS_PORT: 6379
+      DB_HOST: ${DB_HOST:-db}
+      DB_NAME: ${DB_NAME:-mycroft}
+      DB_PORT: ${DB_PORT:-5432}
+      DB_USER: ${DB_USER:-selene}
+      OAUTH_BASE_URL: ${OAUTH_BASE_URL}
+      SELENE_ENVIRONMENT: ${SELENE_ENVIRONMENT:-prod}
+      REDIS_HOST: ${REDIS_HOST:-redis}
+      REDIS_PORT: ${REDIS_PORT:-6379}
 
   devices:
     image: selene-backend
@@ -246,17 +243,24 @@ services:
       - generated/jwt_access_secret
       - generated/jwt_refresh_secret
       - generated/encryption_salt
-      - config_external_accounts.env
-      - config.env
     environment:
-      DB_HOST: db
-      DB_NAME: mycroft
-      DB_PORT: 5432
-      DB_USER: selene
-      SELENE_ENVIRONMENT: prod
-      REDIS_HOST: redis
-      REDIS_PORT: 6379
-      SELENE_ENVIRONMENT: prod
+      DB_HOST: ${DB_HOST:-db}
+      DB_NAME: ${DB_NAME:-mycroft}
+      DB_PORT: ${DB_PORT:-5432}
+      DB_USER: ${DB_USER:-selene}
+      OAUTH_BASE_URL: ${SSO_BASE_URL}
+      SELENE_ENVIRONMENT: ${SELENE_ENVIRONMENT:-prod}
+      REDIS_HOST: ${REDIS_HOST:-redis}
+      REDIS_PORT: ${REDIS_PORT:-6379}
+      EMAIL_SERVICE_HOST: ${EMAIL_SERVICE_HOST}
+      EMAIL_SERVICE_PORT: ${EMAIL_SERVICE_PORT}
+      EMAIL_SERVICE_USER: ${EMAIL_SERVICE_USER}
+      EMAIL_SERVICE_PASSWORD: ${EMAIL_SERVICE_PASSWORD}
+      GOOGLE_STT_KEY: ${GOOGLE_STT_KEY}
+      OWM_KEY: ${OWM_KEY}
+      OWM_URL: ${OWM_URL:-https://api.openweathermap.org/data/2.5}
+      WOLFRAM_ALPHA_KEY: ${WOLFRAM_ALPHA_KEY}
+      WOLFRAM_ALPHA_URL: ${WOLFRAM_ALPHA_URL:-https://api.wolframalpha.com}
 
   deepspeech:
     image: deepspeech

@@ -22,20 +22,16 @@ The project that is closer to the desired result is Mycroft (https://mycroft.ai/
 - A good CPU, STT AND TTS are very CPU intensive. (Using a (nvidia/CUDA ?) GPU would speed up the process a lot but I don't know if it works with this setup yet.)
 
 ## Prepare configuration
-
-Edit and complete:
-  
-- `config.env`
-- `config_external_accounts.env`
-- `.env`
-
-The .env file is only used to build the images, but the variable it contains must have the same value as the one in `config.env`.  
+ 
+You can use `.env.sample` as a starting point to create your specific `.env` file. 
+ ```sh
+cp .env.sample .env
+```
 
 To generate all needed passwords in `./generated` you can run:
 ```sh
 ./setup.sh (only needed once)  
 ```
-
 
 If you do not have a valid domain you can use a fake one like `asdf.asdf` as `MICROFT_DOMAIN`.
 
@@ -108,11 +104,10 @@ docker-compose up -d
 - Use uWSGI for both mozilla-tts and deepspeech server instead of directly exposing the flask dev server through nginx.
 - Make the deepspeech server container use the mainstream repo now that it has been updated.
 - core-version should not be hardcoded in docker-compose.yml (get latest somehow?)
-- Add more variables to the .env files. (There are some left in docker-compose.yml)
-- Remove `.env` and `config.env` and `config_external_accounts.env` from git repository add them to `.gitignore` and place `.*.template` files instead (reduce risk of accidental commit)
 - Make TTS and STT use the GPU. Not very difficult to do, but they seem to use CUDA and for now I do not plan on installing anything proprietary on my servers.
 - Include a fix for the problems in the troubleshooting section.  
 - Rewrite the nginx config to expose api only on the required domains ? to make it easier to split this on multiple computers without docker swarm ?  
+- Use .env Variables in wakeword setup
 
 ## Note
 
