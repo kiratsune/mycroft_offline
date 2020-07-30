@@ -10,8 +10,8 @@ RUN apt-get update && \
 COPY requirements.txt /srv/app/
 RUN pip3 install -r requirements.txt
 
-RUN wget https://github.com/reuben/TTS/releases/download/ljspeech-fwd-attn-pwgan/TTS-0.0.1+92aea2a-py3-none-any.whl && pip3 install *.whl
-
+RUN wget https://github.com/reuben/TTS/releases/download/ljspeech-fwd-attn-pwgan/TTS-0.0.1+92aea2a-py3-none-any.whl
+RUN pip3 install --no-cache-dir *.whl
 # http://bugs.python.org/issue19846
 # > At the moment, setting "LANG=C" on a Linux system *fundamentally breaks Python 3*, and that's not OK.
 ENV LANG C.UTF-8

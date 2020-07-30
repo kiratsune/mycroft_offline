@@ -32,4 +32,4 @@ generate_password_file ${MYCROFT_CREDENTIALS_DIR} jwt_reset_secret JWT_RESET_SEC
 #for sha512 the salt is 16 charatcer long.
 saltsize=16
 echo "Current salt length is ${saltsize}. If this is incorrect, registrations will not work. (Default: 16, for sha512)"
-generate_salt_file ${MYCROFT_CREDENTIALS_DIR} encyption_salt SALT $saltsize
+generate_salt_file ${MYCROFT_CREDENTIALS_DIR} encryption_salt SALT $saltsize
